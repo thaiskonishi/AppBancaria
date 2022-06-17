@@ -17,7 +17,7 @@ public class Banco {
     private final List<ContaPoupancaPF> contasPoupancaPF = new ArrayList<>();
     private final List<ContaInvestimentoPF> contasInvestimentoPF = new ArrayList<>();
     private final List<ContaCorrentePJ> contasCorrentePJ = new ArrayList<>();
-    private final List<ContaInvestimentoPJ> contaInvestimentoPJ = new ArrayList<>();
+    private final List<ContaInvestimentoPJ> contasInvestimentoPJ = new ArrayList<>();
 
     public Banco(String nome) {
         this.nome = nome;
@@ -31,37 +31,91 @@ public class Banco {
         CONTA_CORRENTE, CONTA_POUPANCA, CONTA_INVESTIMENTO
     }
 
-    public Banco() {
-        this.pessoaFisica.add(new ClientePF("Ana", "111.111.111-11"));
-        this.pessoaFisica.add(new ClientePF("Pedro", "222.222.222-22"));
-        this.pessoaFisica.add(new ClientePF("Caio", "333.333.333-33"));
-        this.pessoaFisica.add(new ClientePF("Denis", "444.444.444-44"));
+    public List<ClientePF> getPessoaFisica() {
+        return pessoaFisica;
+    }
 
-        this.pessoaJuridica.add(new ClientePJ("America", "1111"));
-        this.pessoaJuridica.add(new ClientePJ("Barbearia", "2222"));
+    public List<ClientePJ> getPessoaJuridica() {
+        return pessoaJuridica;
+    }
 
-        this.contasCorrentePF.add(new ContaCorrentePF(101, pessoaFisica.get(0), new BigDecimal(10000)));
-        this.contasCorrentePF.add(new ContaCorrentePF(102, pessoaFisica.get(1), new BigDecimal(5000)));
-        this.contasCorrentePJ.add(new ContaCorrentePJ(1001, pessoaJuridica.get(0), new BigDecimal(100000)));
-        this.contasCorrentePJ.add(new ContaCorrentePJ(1001, pessoaJuridica.get(0), new BigDecimal(100000)));
+    public List<ContaCorrentePF> getContasCorrentePF() {
+        return contasCorrentePF;
+    }
+
+    public List<ContaPoupancaPF> getContasPoupancaPF() {
+        return contasPoupancaPF;
+    }
+
+    public List<ContaInvestimentoPF> getContasInvestimentoPF() {
+        return contasInvestimentoPF;
+    }
+
+    public List<ContaCorrentePJ> getContasCorrentePJ() {
+        return contasCorrentePJ;
+    }
+
+    public List<ContaInvestimentoPJ> getContaInvestimentoPJ() {
+        return contasInvestimentoPJ;
+    }
+
+    public Cliente getBuscaCliente(String codigoCliente) {
+        for (ClientePF cliente : pessoaFisica) {
+            if (cliente.getCodigoCliente().contains(codigoCliente)) {
+                return cliente;
+            }
+        }
+        for (ClientePJ cliente : pessoaJuridica) {
+            if (cliente.getCodigoCliente().contains(codigoCliente)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    public Conta getBuscaConta(int codigoConta) {
+        for (ContaCorrentePF conta : contasCorrentePF) {
+            if (conta.getCodigoConta() == codigoConta) {
+                return conta;
+            }
+        }
+        for (ContaCorrentePJ conta : contasCorrentePJ) {
+            if (conta.getCodigoConta() == codigoConta) {
+                return conta;
+            }
+        }
+        for (ContaInvestimentoPF conta : contasInvestimentoPF) {
+            if (conta.getCodigoConta() == codigoConta) {
+                return conta;
+            }
+        }
+        for (ContaInvestimentoPJ conta : contasInvestimentoPJ) {
+            if (conta.getCodigoConta() == codigoConta) {
+                return conta;
+            }
+        }
+        for (ContaPoupancaPF conta : contasPoupancaPF) {
+            if (conta.getCodigoConta() == codigoConta) {
+                return conta;
+            }
+        }
+
+        return null;
 
     }
 
-    public int cadastrarCliente(String nomeCliente, String codigoCliente, String tipoPessoa) {
-        System.out.println("Em tipo de pessoa, digite pf para pessoa física e pj para pessoa jurídica.");
+    public void cadastrarCliente(String nomeCliente, String codigoCliente, String tipoPessoa) {
         if (tipoPessoa == "pf") {
             pessoaFisica.add(new ClientePF(nome, codigoCliente));
-            int indice = ClientePF.total - 1;
-            return indice;
+            System.out.println("cliente cadastrado");
 
         } else if (tipoPessoa == "pj") {
             pessoaJuridica.add(new ClientePJ(nome, codigoCliente));
-            int indice = ClientePJ.total - 1;
-            return indice;
+            System.out.println("cliente cadastrado");
 
         } else {
-            System.out.println("Digite um tipo de pessoa válido! ( pf ou pj )");
-            return -1;
+            System.out.println("tipo de pessoa válido!");
+
         }
 
     }
@@ -93,7 +147,7 @@ public class Banco {
                         System.out.println("Não é possível abrir uma conta poupança para uma pessoa jurídica.");
                         break;
                     case CONTA_INVESTIMENTO:
-                        contaInvestimentoPJ
+                        contasInvestimentoPJ
                                 .add(new ContaInvestimentoPJ(codigoConta, (ClientePJ) cliente, BigDecimal.ZERO));
                         break;
                 }

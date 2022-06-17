@@ -72,7 +72,7 @@ public abstract class Conta implements Operacoes {
 
     @Override
     public boolean investir(BigDecimal valor, Conta destino) {
-        BigDecimal taxa = new BigDecimal("1.02");
+        BigDecimal taxa = new BigDecimal("1.00");
         destino.deposita(valor.multiply(taxa));
         return true;
     }

@@ -6,7 +6,7 @@ public class ContaCorrentePF extends Conta {
 
     public ContaCorrentePF(int codigoConta, Cliente titular, BigDecimal saldo) {
         super(codigoConta, titular, saldo);
-        System.out.println("A conta corrente" + super.getCodigoConta() + "PF foi criada ");
+        System.out.println("A conta corrente PF foi criada ");
         total++;
 
     }

@@ -11,4 +11,11 @@ public class ContaInvestimentoPJ extends Conta {
     public String getTipoConta() {
         return ContaInvestimentoPJ.TIPO_CONTA;
     }
+
+    @Override
+    public boolean investir(BigDecimal valor, Conta destino) {
+        BigDecimal taxa = new BigDecimal("1.02");
+        destino.deposita(valor.multiply(taxa));
+        return true;
+    }
 }
